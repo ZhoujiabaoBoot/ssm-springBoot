@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dzkj.mapper.IUsersMapper">
+			<insert id="add" parameterType="com.dzkj.pojo.Users">
+					insert into person
+					<if test="tellphone!=null">
+							(userid,tellphone,pwd,time) values(seq_users_uid.nextval,#{tellphone},#{pwd},#{time})
+					</if>
+					<if test="email!=null">
+							(userid,email,pwd,time) values(seq_users_uid.nextval,#{email},#{pwd},#{time})
+					</if>
+			</insert>
+			
+			<select id="Login" resultType="com.dzkj.pojo.Users">
+					select * from where
+					<if test="uname!=null">
+							uname=#{uname} and pwd=#{pwd}
+					</if>
+					<if test="tellphone!=null">
+							tellphone=#{tellphone} and pwd=#{pwd}
+					</if>
+					<if test="email!=null">
+							email=#{email} and pwd=#{pwd}
+					</if>
+			</select>
+			
+			<select id="selectname" resultType="com.dzkj.pojo.Users">
+					select * from users where
+					<if test="tellphone!=null">
+							tellphone=#{tellphone}
+					</if>
+					<if test="email!=null">
+							email=#{email}
+					</if>
+			</select>
+			<update id="update">
+					update users set uzname =#{uzname},name=#{name},usex=#{usex},birthday=#{birthday},tellphone=#{tellphone},email=#{email},recharge=#{recharge} where userid=#{userid}
+			</update>
+			
+			<select id="QueryAll" resultType="com.dzkj.pojo.Address">
+					select * from address
+			</select>
+			
+			<delete id="delete">
+					delete from address where aid=#{aid}
+			</delete>
+			
+			<select id="SelectRegion" resultType="com.dzkj.pojo.Region">
+					select * from region where parent_id=#{parent_id}
+			</select>
+			
+			<select id="SelectRegionById" resultType="com.dzkj.pojo.Region">
+					select * from region where region_id=#{region_id}
+			</select>
+			
+			<insert id="AddAddress">
+					insert into address values(Seq_address_aid.nextval,#{userid},#{consignee},#{tel},#{sheng},#{city},#{county},#{delivery},#{state})
+			</insert>
+			
+			<update id="updateStateAddress">
+					update address set state=#{state} where aid=#{aid} 
+			</update>
+			
+			<select id="SelectByIdAddress" resultType="com.dzkj.pojo.Address">
+					select * from address where aid=#{aid}
+			</select>
+			
+			<update id="UpdateDefaultAddress">
+					update address set consignee=#{consignee},tel=#{tel},sheng=#{sheng},city=#{city},county=#{county},delivery=#{delivery} where aid=#{aid}
+			</update>
+</mapper>
